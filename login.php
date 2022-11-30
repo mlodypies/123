@@ -20,7 +20,7 @@
     require_once('class/User.class.php');
     $user = new User($_REQUEST['login'], $_REQUEST['password']);
     if($user->login()) {
-        echo "Zalogowano prawidłowo";
+        echo "Zalogowano prawidłowo użytkownika: ".$user->getName();
     } else {
         echo "Nieprawidłowy login lub hasło";
     }

@@ -14,7 +14,7 @@
         <input type="password" name="password" id="passwordID"><br>
         <label for="loginID">Imie:</label><br>
         <input type="text" name="firstName" id="firstNameID"><br>
-        <label for="lastNameID">Login:</label><br>
+        <label for="lastNameID">Nazwisko:</label><br>
         <input type="text" name="lastName" id="lastNameID"><br>
         <input type="submit" value="Rejestruj">
   </form>
@@ -23,6 +23,8 @@
  if(isset($_REQUEST['login']) && isset($_REQUEST['password'])) {
     require_once('class/User.class.php');
     $user = new User($_REQUEST['login'], $_REQUEST['password']);
+    $user->setFirstName($_REQUEST['firstName']);
+    $user->setLastName($_REQUEST['lastName']);
     if($user->register()) {
         echo "Zarejestrowano pomyślnie";
     } else {
