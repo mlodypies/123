@@ -15,14 +15,15 @@ class User {
   }
 
 
-  public function register() {
+  public function register() : bool {
     $passwordHash = password_hash($this->password, PASSWORD_ARGON2I);
     $query = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?)";
     $db = new mysqli('localhost', 'root', '', 'loginForm');
     $preparedQuery = $db->prepare($query);
     $preparedQuery->bind_param('ssss', $this->login, $passwordHash,  
                                         $this->firstName, $this->lastName);
-    $preparedQuery->execute();
+    $result = $preparedQuery->execute();
+    return $result;
   }
   
   public function login() {
@@ -39,13 +40,12 @@ class User {
           $this->id = $row['id'];
           $this->firstName = $row['firstName'];
           $this->lastNanme = $row['lastName'];
-          echo "Zalogowano pomyslnie!";
+          return true;
       } else {
-        echo "Błędny login lub hasło!";
+          return false;
       }
     } else {
-      //no matching rows - exit the function
-      return;
+      return false;
     }
     
   }
